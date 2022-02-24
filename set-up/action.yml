@@ -7,6 +7,9 @@ outputs:
   needs-build:
     description: true if the output needs building
     value: ${{ steps.check-cache.outputs.cache-hit != 'true' }}
+  path:
+    description: same as inputs.output-path
+    value: ${{ inputs.output-path }}
 inputs:
   paths:
     required: true
