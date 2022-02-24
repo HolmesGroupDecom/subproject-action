@@ -91,7 +91,7 @@ runs:
     - name: Generate cache key
       id: gen-cache-key
       run: |
-        mapfile -t paths <<<"${{inputs.paths}}"
+        mapfile -t paths < <(echo -n "${{inputs.paths}}")
         key=$(git-hash-files.sh "${paths[@]}" -- ${{inputs.dep-0}} ${{inputs.dep-1}} ${{inputs.dep-2}} ${{inputs.dep-3}} ${{inputs.dep-4}} ${{inputs.dep-5}} ${{inputs.dep-6}} ${{inputs.dep-7}} ${{inputs.dep-8}} ${{inputs.dep-9}} ${{inputs.dep-10}} ${{inputs.dep-11}})
         echo "::set-output name=key::${{inputs.key-prefix}}-$key"
       shell: bash

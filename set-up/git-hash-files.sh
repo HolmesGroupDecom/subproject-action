@@ -15,7 +15,8 @@ do
         if [ "$file" = "--" ]
         then
             files="false"
-        else
+        elif [ -n "$file" ]
+        then
             sha=$(git rev-parse "HEAD:$file")
             echo "$file: $sha" 1>&2
             echo -n $sha
