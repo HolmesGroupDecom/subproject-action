@@ -16,9 +16,12 @@ do
         then
             files="false"
         else
-            git rev-parse "HEAD:$file"
+            sha=$(git rev-parse "HEAD:$file")
+            echo "$file: $sha" 1>&2
+            echo -n $sha
         fi
     else
+        echo "string: $file" 1>&2
         echo -n "$file"
     fi
 done | git hash-object --stdin
