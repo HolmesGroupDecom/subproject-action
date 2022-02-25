@@ -14,6 +14,10 @@ inputs:
   paths:
     required: true
     description: A newline separated list of paths to checkout. (Currently all a checked out, but only these are used for the key)
+  lfs:
+    required: false
+    description: Whether to download Git-LFS files
+    default: 'false'
   output-path:
     required: false
     description: The path to be saved in the commit action
@@ -88,6 +92,8 @@ runs:
 
     # TODO: make this sparse and partial then only checkout once the cache check is done
     - uses: actions/checkout@v2
+      with:
+        lfs: ${{inputs.lfs}}
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
