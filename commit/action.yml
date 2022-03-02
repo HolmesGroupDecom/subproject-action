@@ -1,24 +1,23 @@
 name: Commit
 description: Commits the build
 inputs:
-  key:
-    description: The key that was produced by set-up
+  project:
     required: true
-  path:
-    description: The path to be committed, must match output-path of set-up
-    required: false
-    default: __dummy_value__
-# TODO: make this a post step of set-up
+    description: The output of the check action
 
+# TODO: make this a post action of restore
 runs:
   using: composite
   steps:
-    - run: touch __dummy_value__
-      shell: bash
-      if: inputs.path == '__dummy_value__'
+    # Using a different version of tar from windows causes a cache miss with linux
+    # https://github.com/actions/cache/issues/576#issuecomment-830796954
+    - name: "Use GNU tar instead BSD tar"
+      shell: cmd
+      run: echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
+      if: runner.os == 'Windows'
 
     - name: Save cache
       uses: martijnhols/actions-cache/save@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{inputs.path}}
-        key: ${{inputs.key}}
+        path: ${{fromJson(inputs.project).path}}
+        key: ${{fromJson(inputs.project).key}}

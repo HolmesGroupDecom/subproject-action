@@ -1,0 +1,118 @@
+name: Restore
+description: Checks out, restores dependencies
+inputs:
+  project:
+    required: true
+    description: The output of the check action
+  lfs:
+    required: false
+    description: Whether to download Git-LFS files
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    # Using a different version of tar from windows causes a cache miss with linux
+    # https://github.com/actions/cache/issues/576#issuecomment-830796954
+    - name: "Use GNU tar instead BSD tar"
+      shell: cmd
+      run: echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
+      if: runner.os == 'Windows'
+
+    # TODO: make this sparse
+    - uses: actions/checkout@v2
+      with:
+        lfs: ${{inputs.lfs}}
+
+    # Dependencies
+    - name: Restore dependency 0
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[0] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[0].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[0].key }}
+        required: true
+    - name: Restore dependency 1
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[1] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[1].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[1].key }}
+        required: true
+    - name: Restore dependency 2
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[2] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[2].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[2].key }}
+        required: true
+    - name: Restore dependency 3
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[3] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[3].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[3].key }}
+        required: true
+    - name: Restore dependency 4
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[4] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[4].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[4].key }}
+        required: true
+    - name: Restore dependency 5
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[5] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[5].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[5].key }}
+        required: true
+    - name: Restore dependency 6
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[6] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[6].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[6].key }}
+        required: true
+    - name: Restore dependency 7
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[7] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[7].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[7].key }}
+        required: true
+    - name: Restore dependency 8
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[8] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[8].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[8].key }}
+        required: true
+    - name: Restore dependency 9
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[9] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[9].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[9].key }}
+        required: true
+    - name: Restore dependency 10
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[10] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[10].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[10].key }}
+        required: true
+    - name: Restore dependency 11 
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[11] != null }}
+      uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
+      with:
+        path: ${{ fromJson(fromJson(inputs.project).dependencies)[11].path }}
+        key: ${{ fromJson(fromJson(inputs.project).dependencies)[11].key }}
+        required: true
+
+    - name: Check max dependencies
+      if: ${{ fromJson(fromJson(inputs.project).dependencies)[12] != null }}
+      run: |
+        echo more than 12 dependencies not currently supported
+        exit 1
+      shell: bash
