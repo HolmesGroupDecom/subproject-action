@@ -1,9 +1,18 @@
 name: Restore
 description: Checks out, restores dependencies
 inputs:
+  path:
+    required: false
+    description: The paths to checkout
+    default: ''
+  dependencies:
+    required: false
+    description: The dependencies to restore (JSON list of JSON of the output of the check action)
+    default: '[]'
   project:
-    required: true
-    description: The output of the check action
+    required: false
+    description: The output of the check action (overrides path and dependencies)
+    default: '{}'
   lfs:
     required: false
     description: Whether to download Git-LFS files
@@ -25,96 +34,96 @@ runs:
     - uses: actions/checkout@v2
       with:
         lfs: ${{inputs.lfs}}
-      if: fromJson(inputs.project).path != ''
+      if: (inputs.project == '{}' && inputs.path || fromJson(inputs.project).path) != ''
 
     # Dependencies
     - name: Restore dependency 0
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[0] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[0] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[0].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[0].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[0].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[0].key }}
         required: true
     - name: Restore dependency 1
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[1] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[1] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[1].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[1].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[1].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[1].key }}
         required: true
     - name: Restore dependency 2
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[2] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[2] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[2].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[2].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[2].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[2].key }}
         required: true
     - name: Restore dependency 3
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[3] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[3] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[3].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[3].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[3].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[3].key }}
         required: true
     - name: Restore dependency 4
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[4] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[4] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[4].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[4].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[4].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[4].key }}
         required: true
     - name: Restore dependency 5
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[5] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[5] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[5].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[5].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[5].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[5].key }}
         required: true
     - name: Restore dependency 6
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[6] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[6] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[6].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[6].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[6].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[6].key }}
         required: true
     - name: Restore dependency 7
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[7] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[7] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[7].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[7].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[7].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[7].key }}
         required: true
     - name: Restore dependency 8
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[8] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[8] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[8].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[8].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[8].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[8].key }}
         required: true
     - name: Restore dependency 9
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[9] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[9] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[9].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[9].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[9].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[9].key }}
         required: true
     - name: Restore dependency 10
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[10] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[10] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[10].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[10].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[10].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[10].key }}
         required: true
     - name: Restore dependency 11 
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[11] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[11] != null }}
       uses: martijnhols/actions-cache/restore@204c5fc6f17f75fc56021276acb5aa4b6a051d8e
       with:
-        path: ${{ fromJson(fromJson(inputs.project).dependencies)[11].path }}
-        key: ${{ fromJson(fromJson(inputs.project).dependencies)[11].key }}
+        path: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[11].path }}
+        key: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[11].key }}
         required: true
 
     - name: Check max dependencies
-      if: ${{ fromJson(fromJson(inputs.project).dependencies)[12] != null }}
+      if: ${{ fromJson(inputs.project == '{}' && inputs.dependencies || fromJson(inputs.project).dependencies)[12] != null }}
       run: |
         echo more than 12 dependencies not currently supported
         exit 1
