@@ -38,8 +38,12 @@ runs:
       shell: cmd
       run: |
         echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
-        where zstd
       if: runner.os == 'Windows'
+
+    # If zstd is missing a different compression method will be used
+    # and cause a cache miss
+    - run: which zstd
+      shell: bash
 
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
