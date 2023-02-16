@@ -40,6 +40,15 @@ runs:
         echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
       if: runner.os == 'Windows'
 
+    # zstd 1.5.4 broke actions/toolkit https://github.com/actions/toolkit/issues/1341
+    - if: runner.os == 'Windows'
+      run: |
+        if zstd --version | grep -q '1.5.[4-9]'; then
+          choco install zstandard --version 1.5.0
+          echo 'C:\ProgramData\chocolatey\bin'>>"$GITHUB_PATH"
+        fi
+      shell: bash
+
     # If zstd is missing a different compression method will be used
     # and cause a cache miss
     - run: which zstd
