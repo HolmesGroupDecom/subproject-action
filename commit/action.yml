@@ -20,9 +20,17 @@ runs:
     # zstd 1.5.4 broke actions/toolkit https://github.com/actions/toolkit/issues/1341
     - if: runner.os == 'Windows'
       run: |
-        if zstd --version | grep -q '1.5.[4-9]'; then
+        if zstd --version | grep -q 'Zstandard CLI'; then
           choco install zstandard --version 1.5.0
           echo 'C:\ProgramData\chocolatey\bin'>>"$GITHUB_PATH"
+        fi
+      shell: bash
+    - if: runner.os == 'Linux'
+      run: |
+        if zstd --version | grep -q 'Zstandard CLI'; then
+          printf '#!/bin/sh\n'"$(which zstd)"' "$@" | sed "s/Zstandard CLI/zstd command line interface/g"' > "$RUNNER_TEMP/zstd"
+          chmod +x "$RUNNER_TEMP/zstd"
+          echo "$RUNNER_TEMP">>"$GITHUB_PATH"
         fi
       shell: bash
 
